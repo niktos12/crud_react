@@ -4,9 +4,13 @@ import { useContext } from "react";
 import { ModalAddContext } from "../context/ModalAddContext";
 import { ModalAdd } from "../components/ModalAdd";
 import { CreateProduct } from "../components/CreateProduct";
+import useProductStore from "../hooks/useProductsModal";
 export function ProductsPage() {
-  const { products } = useProducts();
   const { modal, open, close } = useContext(ModalAddContext);
+
+  
+  const products = useProductStore((state) => state.products);
+
   return (
     <div className="grid grid-cols-[repeat(2,450px)] justify-center gap-4 from-black to-slate-950 bg-gradient-to-r h-full">
       {products.map((product) => (
@@ -14,7 +18,7 @@ export function ProductsPage() {
       ))}
       {modal && 
         <ModalAdd onClose={close} title="Create product">
-          <CreateProduct />
+          <CreateProduct/>
         </ModalAdd>
       }
       <button

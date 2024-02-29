@@ -1,27 +1,14 @@
 import { useState } from "react";
 import useProductsModal from "../hooks/useProductsModal";
 import z from "zod";
+import axios from "axios";
+import { useProducts } from "../hooks/useProducts";
+import { IProduct } from "../models";
+import useProductStore from "../hooks/useProductsModal";
 
-export function CreateProduct() {
-  const title = z
-    .string()
-    .min(3, { message: "Title should be at least 3 characters" })
-    .refine((value) => /^[\p{L}а-яА-Я]+[-'s]?[\p{L}а-яА-Я ]+$/u.test(value), {
-      message: "Title should contain only letters and spaces",
-    });
-  const price = z.number().min(1, { message: "Price should be at least 1" });
-  const image = z.string().url({ message: "Image should be a valid URL" });
-  const quantity = z
-    .number()
-    .min(1, { message: "Quantity should be at least 1" });
-  const description = z
-    .string()
-    .min(5, { message: "Description should be at least 5 characters" })
-    .refine((value) => /^[\p{L}а-яА-Я]+[-'s]?[\p{L}а-яА-Я ]+$/u.test(value), {
-      message: "Description should contain only letters and spaces",
-    });
+export const CreateProduct = () => {
 
-  const { addProductToServer } = useProductsModal();
+  const addProduct = useProductStore((state) => state.addProduct);
   const [product, setProduct] = useState({
     title: "",
     price: 0,
@@ -29,9 +16,51 @@ export function CreateProduct() {
     description: "",
     quantity: 0,
   });
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://fakestoreapi.com/products",
+        product
+      );
+      addProduct(response.data);
+      setProduct({
+        title: "",
+        price: 0,
+        image: "",
+        description: "",
+        quantity: 0,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const title = z
+    .string()
+    .min(3, { message: "Title should be at least 3 characters" })
+    .refine((value) => /^[\p{L}а-яА-Я]+[-'s]?[\p{L}а-яА-Я ]+$/u.test(value), {
+      message: "Title should contain only letters and spaces",
+    });
+
+  const price = z.number().min(1, { message: "Price should be at least 1" });
+
+  const image = z.string().url({ message: "Image should be a valid URL" });
+
+  const quantity = z
+    .number()
+    .min(1, { message: "Quantity should be at least 1" });
+    
+  const description = z
+    .string()
+    .min(5, { message: "Description should be at least 5 characters" })
+    .refine((value) => /^[\p{L}а-яА-Я]+[-'s]?[\p{L}а-яА-Я ]+$/u.test(value), {
+      message: "Description should contain only letters and spaces",
+    });
+
   return (
-    <form>
-      <h1>Create product</h1>
+    <form className="flex flex-col" onSubmit={handleSubmit}>
       <input
         value={product.title}
         onChange={(e) => setProduct({ ...product, title: e.target.value })}
@@ -78,6 +107,12 @@ export function CreateProduct() {
         name="quantity"
         required
       />
+      <button
+        className="bg-black text-white rounded-3xl px-4 py-2"
+        type="submit"
+      >
+        Add
+      </button>
     </form>
   );
-}
+};
