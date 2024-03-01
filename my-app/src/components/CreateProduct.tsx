@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import useProductsModal from "../hooks/useProductsModal";
 import z from "zod";
 import axios from "axios";
 import { useProducts } from "../hooks/useProducts";
-import { IProduct } from "../models";
 import useProductStore from "../hooks/useProductsModal";
+import { ModalAddContext } from "../context/ModalAddContext";
 
 export const CreateProduct = () => {
-
+  const { modal, open, close } = useContext(ModalAddContext);
   const addProduct = useProductStore((state) => state.addProduct);
   const [product, setProduct] = useState({
     title: "",
@@ -32,6 +32,7 @@ export const CreateProduct = () => {
         description: "",
         quantity: 0,
       });
+      close();
     } catch (err) {
       console.error(err);
     }

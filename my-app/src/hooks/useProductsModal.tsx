@@ -1,6 +1,7 @@
 import create from 'zustand';
 import { persist, StateStorage } from 'zustand/middleware';
 
+
 interface Product {
   id: number;
   title: string;
@@ -13,6 +14,7 @@ interface Product {
 interface ProductState {
   products: Product[];
   addProduct: (product: Product) => void;
+  removeProduct: (id: number) => void;
 }
 
 const localStorage: StateStorage = {
@@ -31,7 +33,13 @@ const useProductStore = create(
   persist<ProductState>(
     (set) => ({
       products: [],
-      addProduct: (product) => set((state) => ({ products: [...state.products, product] })),
+      
+      addProduct: (product) => set((state) => {
+        const maxId = Math.max(...state.products.map(product => product.id), 0);
+        const newId = maxId + 1;
+        return { products: [...state.products, { ...product, id: newId }] };
+      }),
+      removeProduct: (id) => set((state) => ({ products: state.products.filter(product => product.id !== id) })),
     }),
     {
       name: 'product-storage',
