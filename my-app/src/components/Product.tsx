@@ -22,7 +22,7 @@ export function Product({product} : IProductProps){
 			
 		>
 			<Menu as='div' className="relative inline-block text-right w-full">
-				<Menu.Button>
+				<Menu.Button className='hover:bg-slate-100 hover:rounded-full duration-300 p-2'>
 					<HiOutlineDotsVertical className="text-3xl" />
 				</Menu.Button>
 			
@@ -50,13 +50,14 @@ export function Product({product} : IProductProps){
 			<img src={product.image} className="w-[180px] h-[180px] xm:w-[150px] xm:h-[150px]" />
 			<p className="font-bold text-xl sm:text-lg">{product.title}</p>
 			<p className="font-bold text-lg sm:text-lg">{product.price}$</p>
+			<p>{product.description.slice(0, 10) + "..."}</p>
 
 			<div className="flex flex-row gap-4 items-center">
-				{/* <Link to={`/product/${product.id}`}>
+				<Link to={`/product/${product.id}`}>
 					<button className="bg-black text-white rounded-3xl px-4 py-2">
 						Details
 					</button>
-				</Link> */}
+				</Link>
 			</div>
 		</div>
     )
