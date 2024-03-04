@@ -33,9 +33,9 @@ export function ProductsPage() {
         Create
       </button>
     </div>
-    {displayedCount < products.length && (
+    {displayedCount < products.length ? (
         <button onClick={loadMoreProducts} className="text-2xl font-semibold bg-white rounded-3xl px-4 py-2 w-full text-center mt-4 text-black rounded-3xl">Загрузить еще</button>
-      )}
+      ) : <p className="text-2xl font-semibold bg-white rounded-3xl px-4 py-2 w-full text-center mt-4 text-black rounded-3xl">Конец списка продуктов</p>}
     </>
     
   );
