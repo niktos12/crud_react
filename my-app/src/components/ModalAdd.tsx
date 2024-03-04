@@ -5,15 +5,6 @@ interface ModalProps {
 }
 
 export function ModalAdd({ children, onClose, title }: ModalProps) {
-  //   const { addProductToServer } = useProductsModal();
-  //   const [product, setProduct] = useState({
-  //     title: "",
-  //     price: 0,
-  //     image: "",
-  //     description: "",
-  //     quantity: 0,
-  //   });
-
   return (
     <>
       <div

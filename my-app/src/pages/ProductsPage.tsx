@@ -1,4 +1,3 @@
-import { useProducts } from "../hooks/useProducts";
 import { Product } from "../components/Product";
 import { useContext } from "react";
 import { ModalAddContext } from "../context/ModalAddContext";
@@ -8,19 +7,18 @@ import useProductStore from "../hooks/useProductsModal";
 export function ProductsPage() {
   const { modal, open, close } = useContext(ModalAddContext);
 
-  
   const products = useProductStore((state) => state.products);
 
   return (
-    <div className="grid grid-cols-[repeat(2,450px)] justify-center gap-4 from-black to-slate-950 bg-gradient-to-r h-full">
+    <div className="grid grid-cols-[repeat(2,450px)] justify-center gap-4 from-black to-slate-950 bg-gradient-to-r h-screen content-center">
       {products.map((product) => (
         <Product key={product.id} product={product} />
       ))}
-      {modal && 
+      {modal && (
         <ModalAdd onClose={close} title="Create product">
-          <CreateProduct/>
+          <CreateProduct />
         </ModalAdd>
-      }
+      )}
       <button
         className="bg-green-500 text-white rounded-3xl px-4 py-2 fixed top-5 right-5 z-20"
         onClick={open}

@@ -13,12 +13,13 @@ export function Product({product} : IProductProps){
 	const removeProduct = useProductStore((state) => state.removeProduct);
 
 	const handleRemoveProduct = () => {
-		removeProduct(product.id);
+		removeProduct(product.id!);
 	}
     return(
         <div
 			className="bg-white rounded-3xl p-4 flex flex-col shadow-xl h-[360px] justify-between transition-all
             ease-in duration-150 items-center"
+			onClick={() => console.log(product)}
 			
 		>
 			<Menu as='div' className="relative inline-block text-right w-full">
@@ -51,6 +52,7 @@ export function Product({product} : IProductProps){
 			<p className="font-bold text-xl sm:text-lg">{product.title}</p>
 			<p className="font-bold text-lg sm:text-lg">{product.price}$</p>
 			<p>{product.description.slice(0, 10) + "..."}</p>
+			<p>{product.quantity}</p>
 
 			<div className="flex flex-row gap-4 items-center">
 				<Link to={`/product/${product.id}`}>
