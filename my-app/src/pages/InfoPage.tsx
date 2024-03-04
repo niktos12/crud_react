@@ -11,8 +11,8 @@ export function InfoPage() {
   const { products } = useProductStore();
   const product = products.find((product) => product.id === Number(id));
   return (
-    <div className="from-black to-slate-950 bg-gradient-to-r h-screen flex justify-center items-center">
-      <div className="flex flex-row justify-center gap-20 items-center bg-white rounded-3xl shadow-lg p-20 w-[90%]">
+    <div className="h-screen flex justify-center items-center">
+      <div className="flex flex-row justify-center gap-20 items-center bg-white rounded-3xl shadow-2xl p-20 w-[90%]">
       <Link
         to="/crud_react"
         className="fixed top-5 left-5 text-2xl font-semibold text-white"
