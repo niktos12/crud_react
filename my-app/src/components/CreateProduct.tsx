@@ -34,10 +34,10 @@ export const CreateProduct: React.FC = () => {
     resolver: zodResolver(productSchema),
     defaultValues: {
       title: "",
-      price: 0,
+      price: undefined,
       image: "",
       description: "",
-      quantity: 0,
+      quantity: undefined,
     },
   });
 
@@ -56,45 +56,65 @@ export const CreateProduct: React.FC = () => {
   };
 
   return (
-    <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("title")} placeholder="Title" type="text" required />
-      {errors.title && <p className="text-red-500">{errors.title.message}</p>}
+    <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col gap-2">
+        <p className="text-lg">Title</p>
+        <input {...register("title")} placeholder="Backpack" type="text" required className="border border-gray-300 rounded-3xl px-4 py-2"/>
+        {errors.title && <p className="text-red-500">{errors.title.message}</p>}
 
-      <input
+        </div>
+      <div>
+        <p className="text-lg">Price</p>
+        <input
         {...register("price", { valueAsNumber: true })}
-        placeholder="Price"
+        placeholder="24.99"
         type="number"
         required
+        className="border border-gray-300 rounded-3xl px-4 py-2 w-full"
       />
       {errors.price && <p className="text-red-500">{errors.price.message}</p>}
-
-      <input
+      </div>
+      
+      <div className="">
+        <p className="text-lg">Image</p>
+        <input
         {...register("image")}
-        placeholder="Image URL"
+        placeholder="https://example.com/image.jpg"
         type="text"
         required
+        className="border border-gray-300 rounded-3xl px-4 py-2 w-full"
       />
       {errors.image && <p className="text-red-500">{errors.image.message}</p>}
-
-      <input
+      </div>
+      
+      <div>
+        <p className="text-lg">Description</p>
+        <input
         {...register("description")}
-        placeholder="Description"
+        placeholder="Backpack made of leather and fabric..." 
         type="text"
         required
+        className="border border-gray-300 rounded-3xl px-4 py-2 w-full"
       />
       {errors.description && (
         <p className="text-red-500">{errors.description.message}</p>
       )}
-
-      <input
+      </div>
+      
+      <div>
+        <p className="text-lg">Quantity</p>
+        <input
         {...register("quantity", { valueAsNumber: true })}
-        placeholder="Quantity"
+        placeholder="5"
         type="number"
         required
+        className="border border-gray-300 rounded-3xl px-4 py-2 w-full"
       />
       {errors.quantity && (
         <p className="text-red-500">{errors.quantity.message}</p>
       )}
+      </div>
+      
 
       <button
         className="bg-black text-white rounded-3xl px-4 py-2"
