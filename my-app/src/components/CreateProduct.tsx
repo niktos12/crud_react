@@ -41,18 +41,10 @@ export const CreateProduct: React.FC = () => {
     },
   });
 
-  const onSubmit = async (data: IProduct) => {
-    try {
-      const response = await axios.post(
-        "https://fakestoreapi.com/products",
-        data
-      );
+  const onSubmit = (data: IProduct) => {
       addProduct(data);
       reset();
       close();
-    } catch (err) {
-      console.error(err);
-    }
   };
 
   return (
